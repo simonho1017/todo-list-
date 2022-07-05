@@ -1,6 +1,9 @@
 const express = require('express')
 const UseStrictPlugin = require('webpack/lib/UseStrictPlugin')
 const router = express.Router()
+
+const passport=require('passport')
+
 const User = require('../../models/user')
 
 
@@ -8,7 +11,12 @@ router.get('/login', (req, res) => {
   res.render('login')
 })
 
-router.post('/login', (req, res) => {
+router.post('/login',passport.authenticate('local',{
+  successRedirect:'/',
+  failureRedirect:'users/login'   
+}))
+
+router.post('/register', (req, res) => {
   const { name, email, password, confirmpassword } = req.body
   User.findOne({ email }).then(user => {
     if (user) {
