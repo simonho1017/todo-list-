@@ -42,10 +42,8 @@ router.get('/register', (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-  req.logout(req.user, err => {
-    if (err) return next(err);
-    res.redirect('/users/login');
-  });
+  req.logout()
+  res.redirect('/')
 })
 
 module.exports = router
